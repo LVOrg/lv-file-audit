@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-pod-with-two-containers
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-pod
+  template:
+    metadata:
+      labels:
+        app: my-pod
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq
+      - name: container1
+        command: [ "python3", "-c" ]  # Entrypoint script execution
+        args: [ "import time; time.sleep(100000)" ]
+        image: python:3.10.13-bullseye
+         # Add any desired commands or arguments for container1 here
+        volumeMounts:
+        - name: shared-data  # Mount the volume
+          mountPath: /path/to/shared/pipe  # Where to mount the volume in container1
+      - name: container2
+        image: python:3.10.13-bullseye
+        command: [ "python3", "-c" ]  # Entrypoint script execution
+        args: [ "import time; time.sleep(100000)" ]
+        # Add any desired commands or arguments for container2 here
+        volumeMounts:
+        - name: shared-data  # Mount the same volume
+          mountPath: /path/to/shared/pipe  # Where to mount the volume in container2
+      volumes:
+      - name: shared-data  # Define the volume
+        emptyDir: {}  # Empty directory volume (can use persistent storage options)
