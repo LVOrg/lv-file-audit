@@ -1,0 +1,6 @@
+paddleocr
+gradio
+paddlepaddle
+git+https://github.com/pbcquoc/vietocr.git
+torchvision
+google-generativeai

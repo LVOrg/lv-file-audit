@@ -1,0 +1,1297 @@
+---
+# Source: lv-files/templates/namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lv-file
+---
+# Source: lv-files/templates/repository-config.yml
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIubGFjdmlldC52biI6eyJ1c2VybmFtZSI6InB1bGwiLCJwYXNzd29yZCI6IkxhY3ZpZXQjMTIzIiwiZW1haWwiOiJwdWxsQGxhY3ZpZXQudm4iLCJhdXRoIjoiY0hWc2JEcE1ZV04yYVdWMEl6RXlNdz09In19fQ==
+kind: Secret
+metadata:
+  name: harbor-secret-registry
+  namespace: lv-file
+
+type: kubernetes.io/dockerconfigjson
+---
+# Source: lv-files/templates/config-map.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lv-file
+  namespace: lv-file
+data:
+  admin_db_name: lv-docs
+  db: mongodb%3A%2F%2F192.168.18.36%3A27017
+  elastic_search.prefix_index: 'lv-codx'
+  elastic_search.server: 'http://192.168.18.36:9200'
+  rabbitmq.port: '5672'
+  rabbitmq.server: 'rabbitmq.rabbitmq-dev'
+  rabbitmq.msg: 'xyzdsc-2024'
+  rabbitmq.username: 'guest'
+  rabbitmq.password: 'guest'
+  cache_server: 'lv-file-cache-service.lv-file:11211'
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  web_api_url: ./lvfile
+  private_web_api: http://.lv-file:8012/lvfile
+  auto_ssl_redirect: 'false'
+  use_ssl: ''
+---
+# Source: lv-files/templates/cache.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: lv-file-cache-service
+  namespace: lv-file
+  labels:
+    app: lv-file-cache-service
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+  selector:
+    app: lv-file-cache
+  type: NodePort
+---
+# Source: lv-files/templates/distribute-lock.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: distribute-lock-service
+  namespace: lv-file
+  labels:
+    app: distribute-lock-service
+spec:
+  ports:
+    - name: '2181'
+      protocol: TCP
+      port: 2181
+  selector:
+    app: distribute-lock
+  type: NodePort
+---
+# Source: lv-files/templates/services.yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: lv-file-service
+ namespace: lv-file
+ labels:
+   app: lv-file-service
+spec:
+
+ type: ClusterIP
+
+ selector:
+   app: lv-file
+ ports:
+ - port: 8082
+   targetPort: 80
+   protocol: TCP
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lv-file
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  lv-file
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: lv-file
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: lv-file
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_xdoc/server.py
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - host_url=https://172.16.7.99/lvfile
+            - private_web_api=http://localhost/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: thumb
+          image: docker.io/nttlong/lv-thumbs-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: re-do-all
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  re-do-all
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: re-do-all
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: re-do-all
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/re_do_all.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  content
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: content
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: content
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/contents.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  image
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: image
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: image
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/images.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: index
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  index
+  replicas: 
+  template:
+    metadata:
+      labels:
+        app: index
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: index
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/re_do_all.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: google-file-sync
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  google-file-sync
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: google-file-sync
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: google-file-sync
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/google_file_sync.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: google-folder-sync
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  google-folder-sync
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: google-folder-sync
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: google-folder-sync
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/google_directories_sync.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onedrive-file-sync
+  namespace: lv-file
+  annotations:
+    description: ...
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:*-latest"
+    keel.sh/approvals: "0"
+spec:
+  selector:
+    matchLabels:
+      app:  onedrive-file-sync
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: onedrive-file-sync
+    spec:
+
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+
+      containers:
+
+        - image: docker.lacviet.vn/xdoc/fs-tiny-qc:latest
+          name: onedrive-file-sync
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_jobs/azure_file_sync.py
+            - private_web_api=http://lv-file-service.lv-file:8082/lvfile
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.lv-file:2181
+            - use_ssl=$(use_ssl)
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: docker.io/nttlong/lv-pdf-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: docker.io/nttlong/lv-video-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: docker.io/nttlong/lv-office-libs:1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: docker.io/apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+      imagePullSecrets:
+        name: harbor-secret-registry
+---
+# Source: lv-files/templates/cache.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lv-file-cache
+  namespace: lv-file
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lv-file-cache
+  template:
+    metadata:
+      labels:
+        app: lv-file-cache
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: file-cache
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+# Source: lv-files/templates/distribute-lock.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distribute-lock
+  namespace: lv-file
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: distribute-lock
+  template:
+    metadata:
+      labels:
+        app: distribute-lock
+    spec:
+      containers:
+      - name: distribute-lock
+        image: zookeeper:latest
+        ports:
+        - containerPort: 2181
+---
+# Source: lv-files/templates/ingress.yml
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: lv-file-ingress
+  namespace: lv-file
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /lvfile/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: lv-file-service
+                port:
+                  number: 8082
+
+      
+#      
+#status:
+#  loadBalancer:
+#    ingress:
+#      - ip: 172.16.7.99
+#
+---
+# Source: lv-files/templates/apps.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/test.yml
+###

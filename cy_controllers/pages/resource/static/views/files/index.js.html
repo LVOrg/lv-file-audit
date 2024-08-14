@@ -1,0 +1,371 @@
+﻿<div class="layout-columns">
+    <style>
+        <style >
+        .bkg {
+            background-image: radial-gradient(circle, #f0f0f0 90%, #bbb 100%);
+            background-position: center;
+            background-size: 90% 90%;
+        }
+
+        .w3rcontainer {
+            border: 1px solid #cccfdb;
+            border-radius: 2px;
+        }
+
+        .image-card {
+            overflow-y: hidden;
+        }
+
+        .perspective-left {
+            transform: perspective(1500px) rotateY(15deg);
+            transition: transform 1s ease 0s;
+        }
+
+            .perspective-left:hover {
+                transform: perspective(3000px) rotateY(5deg);
+            }
+
+        .perspective-right {
+            transition: transform 0.5s ease 0s;
+            position: relative;
+            left: 0px;
+            top: 0px;
+        }
+
+        .card-container:has(*:hover) .perspective-right {
+            transform: perspective(100px) rotateY(45deg);
+            position: relative;
+            left: 0px;
+            top: 0px;
+        }
+
+        .card-container:has(*:hover) img.mirror {
+            animation: scale 0.5s ease-in-out forwards;
+        }
+
+        .card-container:has(*:hover) {
+            filter: invert(10%)
+        }
+
+
+        @keyframes scale {
+            to {
+                transform: scale(0.5);
+            }
+        }
+
+        .perspective-right:hover img.mirror {
+            animation: scale 0.5s ease-in-out forwards;
+        }
+
+        .perspective-right:hover {
+            transform: perspective(100px) rotateY(45deg);
+            position: relative;
+            left: 0px;
+            top: 0px;
+        }
+
+        .card-container {
+            overflow: visible;
+        }
+        .dropdown-menu li a {
+            white-space: nowrap !important;
+        }
+
+        img.mirror {
+            -webkit-box-reflect: below 4px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0%, transparent), to(rgba(255, 255, 255, 0.21)));
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px;
+        }
+    </style>
+
+    <style>
+        .shadow-box {
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 5px 15px;
+            margin: 10px;
+        }
+
+        .header {
+            position: relative;
+            left: 0;
+            top: 0;
+            right: 0;
+            padding: 10px;
+        }
+
+        .title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .grid-container {
+            display: grid;
+        }
+
+            .grid-container > div:first-child {
+                grid-row-start: 1;
+                grid-row-end: 1;
+                border: solid 4px red;
+            }
+
+            .grid-container > div:last-child {
+                grid-row-start: 2;
+                grid-row-end: 2;
+            }
+
+        .header-panel label {
+            white-space: nowrap;
+        }
+
+        .img-container {
+            background-image: radial-gradient(circle at -50% 280%, #fff, #000);
+            margin: 4px;
+            z-index: -1;
+            overflow: hidden;
+
+        }
+
+        .header-panel div {
+            padding-right: 10px;
+        }
+
+        .header-panel label {
+            min-width: 120px;
+            text-align: right
+        }
+        .dropdown-menu {
+            padding: 10px;
+            margin:4px;
+            z-index: 1000000 !important;
+        }
+    </style>
+    <div>
+        <rcmpct-grid cols="(,700,100%)(700,,33% 33% 34%)">
+            <rcmpct-template>
+                <div class="layout-rows header-panel">
+                    <div>
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="cloudDropdown" data-toggle="dropdown" aria-expanded="false">
+                            Cloud Providers
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="cloudDropdown">
+                            <li><a class="dropdown-item" href="javascript:void(0);" ng-click="doLoadCloudGoogleConfigAsync().then()">Google Cloud</a></li>
+                            <li><a class="dropdown-item" href="#">Microsoft Azure</a></li>
+                            <li><a class="dropdown-item" href="#">Amazon Web Services</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <label>{{$res("Select tenant")}}</label>
+                    </div>
+                    <div class="dock full">
+                        <input list="app-list" id="ice-cream-choice" ng-change="doLoadAllFiles().then()" name="ice-cream-choice" ng-model="currentAppName" class="form-control form-control-sm">
+                        <datalist id="app-list">
+                            <option ng-repeat="p in listOfApp" value="{{p.Name}}">
+                                {{p.Name}}
+                            </option>
+                        </datalist>
+                    </div>
+                </div>
+                <div class="layout-rows header-panel">
+                    <div>
+                        <label>{{$res("Search")}}</label>
+                    </div>
+                    <div class="dock full">
+                        <div class="input-group mb-3" style="width:100%;padding-right:0px;margin-bottom: 0 !important">
+                            <input type="text" class="form-control form-control-sm" ng-model="fileNameSearchValue" placeholder="{{$res('Search by Filename')}}">
+                            <div class="input-group-append" style=";padding-right:0px">
+                                <button class="btn btn-outline-secondary btn-sm" ng-click="doSearchByFileName().then()" type="button">{{$res("Tìm")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="layout-rows header-panel">
+                        <div>
+                            <label>{{$res("Filter by")}}:</label>
+                        </div>
+                        <div class="dock full">
+                            <select class="form-control form-control-sm" ng-model="filterByDocType" ng-change="doSearchByFileName().then()">
+                                <option value="AllTypes">All types</option>
+                                <option value="Office">Office</option>
+                                <option value="Pdf">Pdf</option>
+                                <option value="Image">Image</option>
+                                <option value="Video">Video</option>
+                                <option value="Unknown">Unknown</option>
+                                <option value="Uncategorized">Uncategorized</option>
+                            </select>
+
+                        </div>
+                        <!--doOpenUploadMultiFilesWindow-->
+                        <div>
+                            <input type="button" class="btn btn-primary btn-sm" value="{{$res('New')}}" ng-click="doOpenUploadWindow().then()" style="margin-right:0px" />
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-sm"   id="upload_more" data-toggle="dropdown" aria-expanded="false" ng-click="doOpenUploadMultiFilesWindow().then()">
+                                Upload files
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </rcmpct-template>
+
+        </rcmpct-grid>
+        <!--<div class="layout rows">
+            <div class="dock full">
+                <div>
+
+                </div>
+            </div>
+            <div style="padding:4px">
+                <input type="button" class="btn btn-primary btn-sm" value="{{$res('New')}}" ng-click="doOpenUploadWindow().then()" style="margin-right:10px" />
+            </div>
+        </div>-->
+    </div>
+
+    <div class="dock full">
+        <div rcmpct-lazy-scroll source="listOfFiles" item-var="p" class="row" on-request-data="doLoadMore" page-size="20">
+            <rcmpct-template>
+                <rcmpct-grid cols="(,700,100%)(700,1280,100%)(1280,,33% 33% 33%)" class="shadow-box" file-id="{{p.UploadId}}">
+                    <rcmpct-grid cols="180px minmax(0,1fr)" class="card-container">
+                        <div class="img-container">
+                            <div class="image-card perspective-right">
+                                <img class="mirror" style="" ng-src="{{p.ThumbUrl}}"  />
+                            </div>
+                        </div>
+                        <rcmpct-grid cols="30% 70%">
+
+                            <div class="bkg" style="overflow:hidden;text-overflow:ellipsis;grid-column:1/-1">
+                                <a style="" ng-if="p.MimeType.indexOf('video/')==0" href="javascript:void(0);" ng-click="doOpenInWindows(p).then()">
+                                    {{p.FileName}}
+                                </a>
+
+                                <a style="text-overflow:ellipsis;white-space:nowrap" ng-if="p.MimeType.indexOf('video/')!=0" ng-href="{{p.UrlOfServerPath}}" target="_blank">{{p.FileName}}</a>
+
+                            </div>
+                            <label>
+                                {{$res("Process error")}}
+                            </label>
+
+                            <label>
+                                {{is_processing_error(p)}}
+                            </label>
+
+                            <label>
+                                {{$res("Encrypt")}}
+                            </label>
+                            <labe>
+                                {{p.IsEncryptContent || false }}
+                            </labe>
+                            <label>{{$res("Doc type")}}</label>
+                            <label>
+                                {{p.DocType}}
+                            </label>
+
+                            <label>{{$res("Storage type")}}</label>
+                            <label>
+                                {{p.StorageType}}
+                            </label>
+                            <label>{{$res("CloudId")}}</label>
+                            <label>
+                                {{p.CloudId}}
+                            </label>
+                            <label>{{$res("Path On Cloud driver")}}</label>
+                            <label style="overflow:hidden;text-overflow:ellipsis">
+                                {{p.FullPathOnCloud}}
+                            </label>
+                            <label>{{$res("Status")}}</label>
+                            <div>
+                                <label ng-if="p.Status==1">
+                                    {{$res("Finished")}}
+                                </label>
+                                <label ng-if="p.Status==0">
+                                    {{$res("Pending")}}
+                                </label>
+                            </div>
+                            <label>
+                                {{$res("Size")}}
+                            </label>
+                            <label>
+                                {{p.SizeInHumanReadable}}
+                            </label>
+                            <span ng-if="p.DurationHumanReadable">
+                                {{$res("Duration time")}}
+                            </span>
+                            <span ng-if="p.DurationHumanReadable">
+                                {{p.DurationHumanReadable}}
+                            </span>
+                            <label>
+                                {{$res("Created on")}}
+                            </label>
+                            <label>
+                                {{p.CreatedOn|date:'dd-MM-yyyy hh:mm:ss'}}
+                            </label>
+
+
+
+
+                            <div style="grid-column: 1/-1">
+                                <div class="layout-rows">
+                                    <div>
+                                        <input type="checkbox" ng-model="p.isSelected" ng-change="showAddTagsButton().then()">
+                                    </div>
+                                    <div class="dock full"></div>
+                                    <div>
+                            <div class="dropdown">
+                            <button style="text-wrap:nowrap;border:none !important" class="form-control form-control-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span style="fon-size:8pt">...</span>
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="doOpenUploadWindow(p.UploadId).then()"><b>{{$res('Update content')}}</b></a></li>
+                                <li><a href="javascript:void(0);" ng-click="showError(p).then()"><b style="color:red">{{$res('Show error')}}</b></a></li>
+                                <li> <a href="javascript:void(0);" ng-click="doEditInDesktop(p).then()">
+                                   {{$res("Edit in Desktop application")}}
+                               </a> </li>
+                                <li> <a href="javascript:void(0);" ng-click="doLoadGeminiAssistantWindow(p).then()">
+                                   {{$res("Gemini  assistant")}}
+                               </a></li>
+
+                              <li><a href="javascript:void(0);" ng-click="doShowDetail(p).then()">{{$res('Detail')}}</a></li>
+                                <li><a href="javascript:void(0);" ng-click="doReadableContent(p).then()">{{$res('Content')}}</a></li>
+                                <li><a href="javascript:void(0);" ng-click="doDelete(p).then()"><b style="color:red">{{$res('Delete')}}</b></a></li>
+
+                            </ul>
+                          </div>
+                        </div>
+<!--                                    <div>-->
+<!--                                        <button class="btn btn-link btn-sm" ng-click="doLoadLayoutOCR(p).then()">{{$res('Layout OCR')}} </button>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <button class="btn btn-link btn-sm" ng-click="doReadableContent(p).then()">{{$res('Content')}} </button>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <button class="btn btn-link btn-sm" ng-click="doShowDetail(p).then()">{{$res('Detail')}} </button>-->
+<!--                                    </div>-->
+<!--                                    <div style="position:relative;right:4px;bottom:4px">-->
+<!--                                        <button class="btn btn-danger btn-sm" ng-click="doDelete(p).then()">{{$res('Delete')}}</button>-->
+<!--                                    </div>-->
+                                </div>
+
+                            </div>
+<!--                            <a ng-href="ms-action/{{currentAppName}}/{{p.UploadID}}" target="_blank">Test</a>-->
+                        </rcmpct-grid>
+                    </rcmpct-grid>
+
+
+
+                </rcmpct-grid>
+
+
+
+            </rcmpct-template>
+        </div>
+
+
+    </div>
+</div>

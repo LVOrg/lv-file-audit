@@ -1,0 +1,31 @@
+
+#FROM docker.lacviet.vn/xdoc/py310-libreoffice:amd.1 as office
+FROM docker.lacviet.vn/xdoc/py310-tessract:amd.1 as tessract
+#FROM docker.lacviet.vn/xdoc/py310-javac:amd.1 as javac
+#FROM docker.lacviet.vn/xdoc/py310-opencv:amd.2 as opencv
+FROM docker.lacviet.vn/xdoc/py310-cy_gs_cv2:amd.1 as cv2
+#FROM docker.lacviet.vn/xdoc/py310-cy-vn:amd.3 as vn
+FROM docker.io/python:3.10.12-slim-bookworm
+COPY ./../docker-cy/check /check
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "arm64" ]; then     apt update && apt-get upgrade -y &&  apt install build-essential -y;     fi
+#COPY --from=office / /
+RUN chmod u+x /check/*.sh
+RUN if [ "$TARGETARCH" = "adm64" ]; then       /check/libreoffice.sh ;     fi
+#COPY --from=tessract /usr/share /usr/share
+#COPY --from=tessract /usr/bin /usr/share
+COPY --from=tessract / /
+RUN /check/tessract.sh
+#COPY --from=javac /usr/lib /usr/lib
+COPY --from=cv2 /usr/local /usr/local
+RUN  /check/opencv.sh
+#COPY --from=vn /app /app
+RUN pip install underthesea
+RUN /check/opencv.sh
+RUN /check/py_vncorenlp.sh
+RUN if [ "$TARGETARCH" = "adm64" ]; then       /check/libreoffice.sh ;     fi
+RUN /check/tessract.sh
+#RUN /check/tika.sh
+RUN python3 -c 'import cv2;print(cv2);'
+
+
