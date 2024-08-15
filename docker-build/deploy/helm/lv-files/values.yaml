@@ -1,0 +1,51 @@
+namespace: files
+auto_ssl_redirect: off
+appConfig:
+  name: ???
+  host:
+    path: ???
+    name: 172.16.7.99
+    protocol: https
+  ingress:
+      pathType: Prefix
+  requireService: true
+  replicas: 4
+db:
+  mongodb: ????
+  manage: 'lv-docs'
+search:
+  prefix_index: ????
+  server: ????
+lacvietApi:
+  url: https://api.trogiupluat.vn/api/DocReader/v1.0/ocr-recognize?api-version=1.0
+  tokenKey: YjMxZTQwMWENRlYzENTkwNmYZjFlZTFkMRiOTMzNzkzZjgMjUNjJjNDJiMUNTJhYjYYzllYmUZg
+  apiVersion: "1.0"
+
+cache:
+  appName: lv-file-cache
+rabbit:
+  server: rabbitmq.rabbitmq-dev
+  port: 5672
+  prefixMsg: xyzdsc-2024 # default value is msg: xyzdsc-2024
+  username: ???
+  password: ????
+replicas: 1
+storage:
+  server: ????
+  directory: ????fice
+  name: storage-files
+processMsg: ["content"]
+customer: "qc"
+imageTag: "latest"
+repository: "docker.io/nttlong"
+libReplicas: 2
+webWorker: 2
+nodePort:
+  office: "32223"
+  pdf: "32224"
+  video: "32225"
+  tika: "32226"
+  content: "32227"
+  ocr: "32228"
+  thumbs: "32229"
+generation:

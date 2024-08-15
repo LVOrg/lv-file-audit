@@ -1,0 +1,1874 @@
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+#ENTRYPOINT \["/usr/bin/env"\]
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+#ENTRYPOINT \["/usr/bin/env"\]
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+#ENTRYPOINT \["/usr/bin/env"\]
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+#ENTRYPOINT \["/usr/bin/env"\]
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+#ENTRYPOINT \["/usr/bin/env"\]
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.2
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.2
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.2
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.5
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.5
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.5
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.5
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.6
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.6
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.6
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.8
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:job.apps.ai.libs.amd.8
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.2
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.2
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.3
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.3
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.3
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.1
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_azure /app/cy_azure
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.7
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.10
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.11
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.11
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+COPY ./../cy-dataset /app/cy-dataset
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.11
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+COPY ./../cy-dataset /app/cy-dataset
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.11
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+COPY ./../cy-dataset /app/cy-dataset
+#RUN pip cache purge
+ENTRYPOINT []
+
+
+ARG BASE
+FROM nttlong/fs:fs.large.core.amd.11
+ARG TARGETARCH
+ARG OS
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../docker-cy/templates/web-api.req.txt /app/web-api.req.txt
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cyx /app/cyx
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+COPY ./../cy-dataset /app/cy-dataset
+#RUN pip cache purge
+ENTRYPOINT []
+

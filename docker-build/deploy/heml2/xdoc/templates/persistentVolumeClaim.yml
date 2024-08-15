@@ -1,0 +1,32 @@
+{{ $storage := .Values.storage -}}
+{{ $storage_files := .Values.storage_files -}}
+{{if hasKey  $storage "className"}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $storage.name }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ $storage.className }}
+  resources:
+    requests:
+      storage: {{$storage.size}}
+---
+{{end}}
+{{if hasKey  $storage_files "className"}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $storage_files.name }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ $storage_files.className }}
+  resources:
+    requests:
+      storage: {{$storage_files.size}}
+---
+{{end}}

@@ -1,0 +1,7 @@
+
+FROM python:3.10.13-bullseye
+COPY ./../venv-google/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY ./../remote_server_libs /remote_server_libs
+RUN apt clean && apt autoclean
+ENTRYPOINT ["/remote_server_libs/google-lock.sh"]
+

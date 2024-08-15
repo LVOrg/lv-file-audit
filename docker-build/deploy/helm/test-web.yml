@@ -1,0 +1,899 @@
+---
+# Source: xdoc-all/templates/web.namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: xdoc
+---
+# Source: xdoc-all/templates/web.apps.yml
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIubGFjdmlldC52biI6eyJ1c2VybmFtZSI6InB1bGwiLCJwYXNzd29yZCI6IkxhY3ZpZXQjMTIzIiwiZW1haWwiOiJwdWxsQGxhY3ZpZXQudm4iLCJhdXRoIjoiY0hWc2JEcE1ZV04yYVdWMEl6RXlNdz09In19fQ==
+kind: Secret
+metadata:
+  name: harbor-secret-registry
+  namespace: xdoc
+
+type: kubernetes.io/dockerconfigjson
+---
+# Source: xdoc-all/templates/web.config.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xdoc-config
+  namespace: xdoc
+data:
+  admin_db_name: lv-docs
+  db: mongodb://192.168.18.36:27017
+  elastic_search.prefix_index: 'lv-codx'
+  elastic_search.server: 'http://192.168.18.36:9200'
+  rabbitmq.port: '5672'
+  
+  rabbitmq.server: 'rabbitmq.rabbitmq-dev'
+  
+  rabbitmq.msg: 'xyzdsc-2024'
+  temp_directory_: /app/share-storage
+  cache_server: memcache-service.xdoc:11211
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  vn_suggest_url: vn-suggestion.xdoc:8000 #vn-suggestion.xdoc-web:8000 TCP
+  tika_server: http://tika.xdoc:9998
+  log_url: https://hooks.slack.com/services/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
+  auto_ssl_redirect: 'off'
+---
+# Source: xdoc-all/templates/file.cache.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: memcache-service
+  namespace: xdoc
+  labels:
+    app: memcache-service
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+      targetPort: 11211
+      nodePort: 30211
+  selector:
+    app: file-cache
+  type: NodePort
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+apiVersion: v1
+kind: Service
+metadata:
+ name: vn-suggestion
+ namespace: xdoc
+ labels:
+   app: vn-suggestion
+spec:
+ type: NodePort
+ selector:
+   app: vn-suggestion
+ ports:
+   - name: "vn-suggestion-nod-port"
+     protocol: TCP
+     port: 8000
+     targetPort: 8000
+---
+# Source: xdoc-all/templates/tika.yml
+apiVersion: v1
+kind: Service
+metadata:
+ name: tika
+ namespace: xdoc
+ labels:
+   app: tika
+spec:
+ type: NodePort
+ selector:
+   app: tika
+ ports:
+   - name: "tika-nod-port"
+     protocol: TCP
+     port: 9998
+     targetPort: 9998
+---
+# Source: xdoc-all/templates/web.service.yml
+# The second we need deploy a Service where application could be accessed by another
+apiVersion: v1
+kind: Service
+metadata:
+ name: xdoc
+ namespace: xdoc
+ labels:
+   app: xdoc
+spec:
+#  type: NodePort
+ selector:
+   app: xdoc
+ ports:
+ - port: 8082
+   targetPort: 80
+   protocol: TCP
+---
+# Source: xdoc-all/templates/file.cache.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-cache
+  namespace: xdoc
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-cache
+  template:
+    metadata:
+      labels:
+        app: file-cache
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: file-cache
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vn-suggestion
+  namespace: xdoc
+spec:
+
+  selector:
+    matchLabels:
+      app: vn-suggestion
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: vn-suggestion
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+        - image: docker.io/nttlong/vn-suggestion:amd.3
+          name: vn-suggestion
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+---
+# Source: xdoc-all/templates/tika.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tika
+  namespace: xdoc
+  #namespace: xdoc-web
+spec:
+  selector:
+    matchLabels:
+      app: tika
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: tika
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+        - image: apache/tika:latest
+          name: tika
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9998
+---
+# Source: xdoc-all/templates/web.apps.yml
+# The first we need deploy an application where Pod of web will run inside
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xdoc
+  namespace: xdoc
+spec:
+  selector:
+    matchLabels:
+      app: xdoc
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: xdoc
+    spec:
+#      tolerations:
+#        - key: "app"
+#          operator: "Equal"
+#          value: "xdoc"
+#          effect: "NoSchedule"
+#      imagePullSecrets:
+#        - name: harbor-secret-registry
+      volumes:
+        - name: content-files
+        - name: xdoc-storage
+          
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/tmp
+          
+        
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+        
+      containers:
+        - args:
+            - python3
+            - /app/cy_xdoc/server.py
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - host_url='https://172.16.7.99/lvfile'
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - server_thumb_office=http://xdoc-office-thumbs.xdoc-web:8014
+            
+          image: nttlong/fs:fs.tiny.amd.19.1
+
+          envFrom:
+            - configMapRef:
+               name: xdoc-config
+          name: xdoc
+        - name: thumb
+          image: nttlong/fs:fs.thumbs.amd.1
+        - name: tika
+          image: apache/tika
+          imagePullPolicy: Always #
+          volumeMounts:
+            - mountPath:  /app/share-storage
+              name: xdoc-storage
+            
+            - mountPath: /mnt/files
+              name: storage-files
+            
+          ports:
+            - containerPort: 80
+---
+# Source: xdoc-all/templates/web-ingress.yml
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: xdoc-web-ingress
+  namespace: xdoc
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /lvfile/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: xdoc
+                port:
+                  number: 8082
+status:
+  loadBalancer:
+    ingress:
+      - ip: 172.16.7.99
+---
+# Source: xdoc-all/templates/Jobs.config.yml
+---
+---
+# Source: xdoc-all/templates/Jobs.namespace.yml
+---
+---
+# Source: xdoc-all/templates/apps.office.thumbs.yml
+#---
+##    #    #      #      #      #      #      #      
+#    #---
+#
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: xdoc-office-thumbs
+#  namespace: xdoc
+#spec:
+#
+#  selector:
+#    matchLabels:
+#      app: xdoc-office-thumbs
+#  replicas: 4
+#  #minimumReplicas: 4
+#  template:
+#    metadata:
+#      labels:
+#        app: xdoc-office-thumbs
+#    spec:
+#      containers:
+#        - args:
+#              - python3
+#              - /app/app_services/office_server.py
+#          image: docker.io/nttlong/fs:gradio.office.thumbs.amd.1
+#          name: xdoc-office-thumbs
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 8014
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+# name: xdoc-office-thumbs
+# namespace: xdoc
+# labels:
+#   app: xdoc-office-thumbs
+#spec:
+# type: NodePort
+# selector:
+#   app: xdoc-office-thumbs
+# ports:
+#   - name: "xdoc-office-thumbs-node-port"
+#     protocol: TCP
+#     port: 8014
+#     targetPort: 8014
+#---
+#
+#---
+---
+# Source: xdoc-all/templates/deployment.yaml
+#------------------------------------------------------
+# just for debug. no more ...
+#------------------------------------------------------
+---
+# Source: xdoc-all/templates/file.cache.yml
+---
+---
+# Source: xdoc-all/templates/file.cache.yml
+---
+---
+# Source: xdoc-all/templates/jobs.apps.yml
+---
+---
+# Source: xdoc-all/templates/jobs.cron.yml
+---
+---
+# Source: xdoc-all/templates/long.horn.claim.yml
+---
+---
+# Source: xdoc-all/templates/long.horn.namespace.yml
+---
+---
+# Source: xdoc-all/templates/msg.app.yml
+---
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+---
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+---
+---
+# Source: xdoc-all/templates/tika.yml
+---
+---
+# Source: xdoc-all/templates/tika.yml
+---
+---
+# Source: xdoc-all/templates/web-ingress.yml
+---
+---
+# Source: xdoc-all/templates/web-ingress.yml
+---
+---
+# Source: xdoc-all/templates/web.apps.yml
+---
+---
+# Source: xdoc-all/templates/web.apps.yml
+---
+#kubectl patch pod xdoc-5d8984b8c-48gfg -p '{"metadata":{"finalizers":null}}' -n xdoc-web
+---
+# Source: xdoc-all/templates/web.config.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.service.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: xdoc
+---
+# Source: xdoc-all/templates/web.apps.yml
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIubGFjdmlldC52biI6eyJ1c2VybmFtZSI6InB1bGwiLCJwYXNzd29yZCI6IkxhY3ZpZXQjMTIzIiwiZW1haWwiOiJwdWxsQGxhY3ZpZXQudm4iLCJhdXRoIjoiY0hWc2JEcE1ZV04yYVdWMEl6RXlNdz09In19fQ==
+kind: Secret
+metadata:
+  name: harbor-secret-registry
+  namespace: xdoc
+
+type: kubernetes.io/dockerconfigjson
+---
+# Source: xdoc-all/templates/web.config.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xdoc-config
+  namespace: xdoc
+data:
+  admin_db_name: lv-docs
+  db: mongodb://192.168.18.36:27017
+  elastic_search.prefix_index: 'lv-codx'
+  elastic_search.server: 'http://192.168.18.36:9200'
+  rabbitmq.port: '5672'
+  
+  rabbitmq.server: 'rabbitmq.rabbitmq-dev'
+  
+  rabbitmq.msg: 'xyzdsc-2024'
+  temp_directory_: /app/share-storage
+  cache_server: memcache-service.xdoc:11211
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  vn_suggest_url: vn-suggestion.xdoc:8000 #vn-suggestion.xdoc-web:8000 TCP
+  tika_server: http://tika.xdoc:9998
+  log_url: https://hooks.slack.com/services/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
+  auto_ssl_redirect: 'off'
+---
+# Source: xdoc-all/templates/file.cache.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: memcache-service
+  namespace: xdoc
+  labels:
+    app: memcache-service
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+      targetPort: 11211
+      nodePort: 30211
+  selector:
+    app: file-cache
+  type: NodePort
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+apiVersion: v1
+kind: Service
+metadata:
+ name: vn-suggestion
+ namespace: xdoc
+ labels:
+   app: vn-suggestion
+spec:
+ type: NodePort
+ selector:
+   app: vn-suggestion
+ ports:
+   - name: "vn-suggestion-nod-port"
+     protocol: TCP
+     port: 8000
+     targetPort: 8000
+---
+# Source: xdoc-all/templates/tika.yml
+apiVersion: v1
+kind: Service
+metadata:
+ name: tika
+ namespace: xdoc
+ labels:
+   app: tika
+spec:
+ type: NodePort
+ selector:
+   app: tika
+ ports:
+   - name: "tika-nod-port"
+     protocol: TCP
+     port: 9998
+     targetPort: 9998
+---
+# Source: xdoc-all/templates/web.service.yml
+# The second we need deploy a Service where application could be accessed by another
+apiVersion: v1
+kind: Service
+metadata:
+ name: xdoc
+ namespace: xdoc
+ labels:
+   app: xdoc
+spec:
+#  type: NodePort
+ selector:
+   app: xdoc
+ ports:
+ - port: 8082
+   targetPort: 80
+   protocol: TCP
+---
+# Source: xdoc-all/templates/file.cache.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-cache
+  namespace: xdoc
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-cache
+  template:
+    metadata:
+      labels:
+        app: file-cache
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: file-cache
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vn-suggestion
+  namespace: xdoc
+spec:
+
+  selector:
+    matchLabels:
+      app: vn-suggestion
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: vn-suggestion
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+        - image: docker.io/nttlong/vn-suggestion:amd.3
+          name: vn-suggestion
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+---
+# Source: xdoc-all/templates/tika.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tika
+  namespace: xdoc
+  #namespace: xdoc-web
+spec:
+  selector:
+    matchLabels:
+      app: tika
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: tika
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+        - image: apache/tika:latest
+          name: tika
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9998
+---
+# Source: xdoc-all/templates/web.apps.yml
+# The first we need deploy an application where Pod of web will run inside
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xdoc
+  namespace: xdoc
+spec:
+  selector:
+    matchLabels:
+      app: xdoc
+  replicas: 1
+  #minimumReplicas: 4
+  template:
+    metadata:
+      labels:
+        app: xdoc
+    spec:
+#      tolerations:
+#        - key: "app"
+#          operator: "Equal"
+#          value: "xdoc"
+#          effect: "NoSchedule"
+#      imagePullSecrets:
+#        - name: harbor-secret-registry
+      volumes:
+        - name: content-files
+        - name: xdoc-storage
+          
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/tmp
+          
+        
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+        
+      containers:
+        - args:
+            - python3
+            - /app/cy_xdoc/server.py
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - host_url='https://172.16.7.99/lvfile'
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - server_thumb_office=http://xdoc-office-thumbs.xdoc-web:8014
+            
+          image: nttlong/fs:fs.tiny.amd.19.1
+
+
+          envFrom:
+            - configMapRef:
+               name: xdoc-config
+          name: xdoc
+        - name: thumb
+          image: nttlong/fs:fs.thumbs.amd.1
+        - name: tika
+          image: apache/tika
+#          imagePullPolicy: Always #
+          volumeMounts:
+            - mountPath:  /app/share-storage
+              name: xdoc-storage
+            
+            - mountPath: /mnt/files
+              name: storage-files
+            
+          ports:
+            - containerPort: 80
+---
+# Source: xdoc-all/templates/web-ingress.yml
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: xdoc-web-ingress
+  namespace: xdoc
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /lvfile/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: xdoc
+                port:
+                  number: 8082
+status:
+  loadBalancer:
+    ingress:
+      - ip: 172.16.7.99
+---
+# Source: xdoc-all/templates/Jobs.config.yml
+---
+---
+# Source: xdoc-all/templates/Jobs.namespace.yml
+---
+---
+# Source: xdoc-all/templates/apps.office.thumbs.yml
+#---
+##    #    #      #      #      #      #      #      
+#    #---
+#
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: xdoc-office-thumbs
+#  namespace: xdoc
+#spec:
+#
+#  selector:
+#    matchLabels:
+#      app: xdoc-office-thumbs
+#  replicas: 4
+#  #minimumReplicas: 4
+#  template:
+#    metadata:
+#      labels:
+#        app: xdoc-office-thumbs
+#    spec:
+#      containers:
+#        - args:
+#              - python3
+#              - /app/app_services/office_server.py
+#          image: docker.io/nttlong/fs:gradio.office.thumbs.amd.1
+#          name: xdoc-office-thumbs
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 8014
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+# name: xdoc-office-thumbs
+# namespace: xdoc
+# labels:
+#   app: xdoc-office-thumbs
+#spec:
+# type: NodePort
+# selector:
+#   app: xdoc-office-thumbs
+# ports:
+#   - name: "xdoc-office-thumbs-node-port"
+#     protocol: TCP
+#     port: 8014
+#     targetPort: 8014
+#---
+#
+#---
+---
+# Source: xdoc-all/templates/deployment.yaml
+#------------------------------------------------------
+# just for debug. no more ...
+#------------------------------------------------------
+---
+# Source: xdoc-all/templates/file.cache.yml
+---
+---
+# Source: xdoc-all/templates/file.cache.yml
+---
+---
+# Source: xdoc-all/templates/jobs.apps.yml
+---
+---
+# Source: xdoc-all/templates/jobs.cron.yml
+---
+---
+# Source: xdoc-all/templates/long.horn.claim.yml
+---
+---
+# Source: xdoc-all/templates/long.horn.namespace.yml
+---
+---
+# Source: xdoc-all/templates/msg.app.yml
+---
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+---
+---
+# Source: xdoc-all/templates/suggestion.app.yml
+---
+---
+# Source: xdoc-all/templates/tika.yml
+---
+---
+# Source: xdoc-all/templates/tika.yml
+---
+---
+# Source: xdoc-all/templates/web-ingress.yml
+---
+---
+# Source: xdoc-all/templates/web-ingress.yml
+---
+---
+# Source: xdoc-all/templates/web.apps.yml
+---
+---
+# Source: xdoc-all/templates/web.apps.yml
+---
+#kubectl patch pod xdoc-5d8984b8c-48gfg -p '{"metadata":{"finalizers":null}}' -n xdoc-web
+---
+# Source: xdoc-all/templates/web.config.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.namespace.yml
+---
+---
+# Source: xdoc-all/templates/web.service.yml
+---

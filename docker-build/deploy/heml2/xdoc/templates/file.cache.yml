@@ -1,0 +1,52 @@
+{{ $fileJob := .Values.fileJob -}}
+{{ $db := .Values.config.db -}}
+{{ $es := .Values.config.elastic_search -}}
+{{ $rb := .Values.config.rabbitmq -}}
+{{ $api := .Values.webApi -}}
+{{ $cache := .Values.cache -}}
+{{ $storage := .Values.storage -}}
+
+{{ if $cache }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $cache.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $cache.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $cache.name }}
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: {{ $cache.name }}
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ $cache.name }}
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+      targetPort: 11211
+      nodePort: 30211
+  selector:
+    app: {{ $cache.name }}
+  type: NodePort
+---
+{{end}}
+---

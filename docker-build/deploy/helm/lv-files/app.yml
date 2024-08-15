@@ -1,0 +1,83 @@
+{{ $images := .Files.Get "images.yml" | fromYaml -}}
+{{ $jobsList:= fromYaml ((include "apps-data" (dict "values" .Values "images" $images) ))  -}}
+---
+{{- range $key, $value := $jobsList.apps }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$value.name}}
+  namespace: {{$value.namespace}}
+  annotations:
+    description: {{$value.description | default "..." }}
+
+spec:
+  selector:
+    matchLabels:
+      app:  {{$value.name}}
+  replicas: {{ $value.replicas}}
+  template:
+    metadata:
+      labels:
+        app: {{$value.name}}
+    spec:
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - mountPath: /mnt/files
+          name: {{$storage_files.name}}
+        - name: {{ $value.storage.name}}
+          nfs:
+            server: {{$value.storage.server}}
+            path: {{$value.storage.directory}}
+      containers:
+        - image: {{ $value.image}}
+          args:
+            - python3
+            - /app/cy_xdoc/server.py
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+            - server_thumb_office=http://xdoc-office-thumbs.xdoc-web:8014
+            - private_web_api=http://localhost/lvfile
+          volumeMounts:
+            - name: tmp-files
+              emptyDir: { }
+            - name: socat-share
+              emptyDir: { }
+            - name: {{ $value.storage.name }}
+              mountPath: /mnt/files
+        {{- range $key, $libs := $value.libs }}
+        - name: {{$key}}
+          image: {{$libs}}
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: tmp-files
+              emptyDir: { }
+            - name: socat-share
+              emptyDir: { }
+            - name: {{ $value.storage.name }}
+              mountPath: /mnt/files
+        {{- end }}
+
+---
+{{- end}}
+---

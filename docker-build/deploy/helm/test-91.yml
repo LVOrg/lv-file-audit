@@ -1,0 +1,258 @@
+---
+# Source: lv-files/templates/namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: files-2
+---
+# Source: lv-files/templates/config-map.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lv-file
+  namespace: files-2
+data:
+  admin_db_name: lv-docs
+  db: mongodb%3A%2F%2F192.168.18.36%3A27017
+  elastic_search.prefix_index: 'lv-codx'
+  elastic_search.server: 'http%3A%2F%2F192.168.18.36%3A9200'
+  rabbitmq.port: '5672'
+  rabbitmq.server: 'rabbitmq.rabbitmq-dev'
+  rabbitmq.msg: 'xyzdsc-2024'
+  cache_server: 'lv-file-cache-service.files-2:11211'
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  auto_ssl_redirect: 'off'
+  web_api_url: files2./lvfile
+  private_web_api: http://files2.files-2:8012/lvfile
+---
+# Source: lv-files/templates/cache.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: lv-file-cache-service
+  namespace: files-2
+  labels:
+    app: lv-file-cache-service
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+  selector:
+    app: lv-file-cache
+  type: NodePort
+---
+# Source: lv-files/templates/services.yml
+apiVersion: v1
+kind: Service
+metadata:
+ name: files2-service
+ namespace: files-2
+ labels:
+   app: files2-service
+spec:
+
+ type: NodePort
+
+ selector:
+   app: files2
+ ports:
+ - port: 8082
+   targetPort: 80
+   protocol: TCP
+
+   nodePort: 30072
+---
+# Source: lv-files/templates/apps.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: files2
+  namespace: files-2
+  annotations:
+    description: ...
+
+spec:
+  selector:
+    matchLabels:
+      app:  files2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: files2
+    spec:
+      
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+#        - name: xdoc-storage
+#          nfs:
+#            server: 192.168.18.36
+#            path: /codx-file-storage/files/tmp
+        - name: storage-files
+          nfs:
+            server: 192.168.18.36
+            path: /codx-file-storage/files
+      
+      containers:
+
+        - image: nttlong/fs:fs.tiny.amd.19.3
+          name: files2
+          envFrom:
+            - configMapRef:
+                name: lv-file
+        
+          args:
+            - python3
+            - /app/cy_xdoc/server.py
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - host_url=https://172.16.7.91/lvfile2
+            - private_web_api=http://localhost/lvfile2
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - cache_server=$(cache_server)
+            - workers=$(workers)
+            - server_type=$(server_type.hypercorn)
+            - worker_class=$(worker_class.trio)
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - tika_server=$(tika_server)
+            - file_storage_path=/mnt/files
+        
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+        - name: pdf
+          image: nttlong/fs:fs.pdf.amd.2
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: thumb
+          image: nttlong/fs:fs.thumbs.amd.2
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: video
+          image: nttlong/fs:fs.video.amd.1
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: office
+          image: nttlong/fs:fs.office.amd.1.4
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+        - name: tika
+          image: apache/tika
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: storage-files
+              mountPath: /mnt/files
+#            - name: xdoc-storage
+#              mountPath: /app/share-storage
+---
+# Source: lv-files/templates/cache.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lv-file-cache
+  namespace: files-2
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lv-file-cache
+  template:
+    metadata:
+      labels:
+        app: lv-file-cache
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: file-cache
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+# Source: lv-files/templates/apps.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/ingress.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/services.yml
+---
+---
+# Source: lv-files/templates/test.yml
+###

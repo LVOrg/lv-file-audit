@@ -1,0 +1,6 @@
+
+FROM python:3.10.13-bullseye
+COPY ./../docker-build/requirements/hello-world.txt /app/hello-world.txt
+RUN python3 -m pip install -r  /app/hello-world.txt --no-cache-dir
+COPY ./../cy_hello_world /app/cy_hello_world
+

@@ -1,0 +1,22 @@
+appConfig:
+  replicas: 3
+  host:
+    name: "eoffice-uat.masanappslab.com"
+    path: lvfile
+    protocol: https
+  ingress:
+db:
+  mongodb: "mongodb://admin:Masan#123@10.10.59.112:27017"
+namespace: xdoc
+rabbit:
+  port: 5672
+  server: "codx-rabbitmq.rabbitmq.svc.cluster.local"
+  username: 'codx'
+  password: 'Masan#123'
+replicas: 1
+search: false
+storage:
+  directory: "/share/xdoc/temp"
+  name: storage-files
+  server: "10.10.59.112"
+processMsg: ["content"]

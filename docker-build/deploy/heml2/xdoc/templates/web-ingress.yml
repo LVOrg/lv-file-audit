@@ -1,0 +1,56 @@
+---
+      {{ $db := .Values.config.db -}}
+      {{ $es := .Values.config.elastic_search -}}
+      {{ $rb := .Values.config.rabbitmq -}}
+      {{ $api := .Values.webApi -}}
+      {{ $ingress := .Values.ingress -}}
+      {{ $storage := .Values.storage}}
+---
+{{ if $ingress}}
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{$ingress.name}}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: {{$ingress.path}}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{$api.name}}
+                port:
+                  number: 80
+---
+{{ if $ingress.hostname}}
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{$ingress.name}}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: $ingress.hostname
+      http:
+        paths:
+          - path: {{$ingress.path}}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{$api.name}}
+                port:
+                  number: 80
+---
+{{end}}
+{{end}}
+---

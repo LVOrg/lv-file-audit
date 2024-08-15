@@ -1,0 +1,87 @@
+---
+# Source: lv-files/templates/namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: default-99-30041
+---
+# Source: lv-files/templates/config-map.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lv-file
+  namespace: default-99-30041
+data:
+  admin_db_name: lv-docs
+  db: mongodb%3A%2F%2F192.168.18.36%3A27017
+  elastic_search.prefix_index: 'lv-codx'
+  elastic_search.server: 'http://192.168.18.36:9200'
+  rabbitmq.port: '5672'
+  rabbitmq.server: 'rabbitmq.rabbitmq-dev'
+  rabbitmq.msg: 'xyzdsc-2024'
+  cache_server: 'lv-file-cache-service.default-99-30041:11211'
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  auto_ssl_redirect: 'off'
+  web_api_url: ./lvfile
+  private_web_api: http://.default-99-30041:8012/lvfile
+---
+# Source: lv-files/templates/cache.yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: lv-file-cache-service
+  namespace: default-99-30041
+  labels:
+    app: lv-file-cache-service
+spec:
+  ports:
+    - name: '11211'
+      protocol: TCP
+      port: 11211
+  selector:
+    app: lv-file-cache
+  type: NodePort
+---
+# Source: lv-files/templates/cache.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lv-file-cache
+  namespace: default-99-30041
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lv-file-cache
+  template:
+    metadata:
+      labels:
+        app: lv-file-cache
+    spec:
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "xdoc"
+          effect: "NoSchedule"
+      containers:
+      - name: file-cache
+        image: memcached:latest
+        ports:
+        - containerPort: 11211
+---
+# Source: lv-files/templates/apps.yml
+---
+---
+# Source: lv-files/templates/test.yml
+###

@@ -4,7 +4,188 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="576fff36-3906-424d-b97e-69375c618532" name="Changes" comment="first commit" />
+    <list default="true" id="576fff36-3906-424d-b97e-69375c618532" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/ai" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/ai-lib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-google-lock.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-google.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-hello.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-large.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-lv.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-medium.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-memcache.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-ocr.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-office-thumbs.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-source.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-thumbs.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-tiny.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-tiny.sh.save" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build-video.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/build.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/check.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/clear.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/compose/run-all.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/dashboard-token.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/db.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/longtest.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/.helmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/app.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/distribute-lock.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/images.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/_apps-data.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/_helpers.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/_is-ip-address.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/_lib-service.yml.delete" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/apps.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/config-map.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/content-service.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/ingress.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/namespace.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/ocr.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/office.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/pdf.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/repository-config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/services.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/thumbs.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/tika.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/templates/video.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/lv-files/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/massan-test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/massan.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/mss.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/new001.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/test-91.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/test-99-30041.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/test-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/helm/test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/.helmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/aws-job-qc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/aws-job.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/aws-web-qc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/aws-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/aws.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/dev-job-99.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/dev-job-only.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/dev-web-99.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/dev-web-only.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/digipro-job.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/digipro-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/jobs.cron.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/lacviet.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/lv-job.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/lv-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/qtsc-job.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/data/qtsc-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/file.cache.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/harbor-secret-registry.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/jobs.apps.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/persistentVolumeClaim.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/suggestion.app.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/tika.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/web-ingress.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/web.apps.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/templates/web.config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/heml2/xdoc/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/91-filelv.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/91-test-es.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99-30041.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99-delete.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99-qc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99-test-es.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/99.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/lv.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/massan.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/qtsc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/values/qtsv-test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/dash-board-simple.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/dash-board-v2.7.0.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/memcache.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/metric-server-rabc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/metric-servr-rabc-binding.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/metric_server.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/ocr.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/qtsc-db-2-files.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/test-rpc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/deploy/yaml/vietlott-syns.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/develpoer-mount.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/extent-root-volume.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/fs.ocr" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/google-lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/gradio-office-thumbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/hello.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job-core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job-core-office" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job-cv2-core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job-office-file" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job-slim-file" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/job.apps.text.pdf.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/jobs.tesseract" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8s-export.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/adm.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/container-d.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/drain-node.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/grafana-datasource-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/grafana-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/grafana-values.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/install-prometheus.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/prepare.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/k8sinstall/tear-down.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/libreoffice-python-310" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/mc-build" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/net-cat-listener.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/new.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/ocr-core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/ocr-mypdf-api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/ocr-processing" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/office-core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/pdf-prcoessing" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/qc.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/received_data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/release-notes/.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/release-notes/1154592customer.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/release-notes/2024-8-12-18-12-46.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/release-notes/vietlott.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/build-app-office.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/hello-world.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/image.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/ocrmypdf.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/office.req.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/remote-thumb-service.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/text_from_pdf.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/requirements/web-api.req.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/rpc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/server-app-office" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/stop-all.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/surya-ocr-entrypoint" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/tesseract.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/test-0004.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/test-debug/google-drive.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/test-hello-world" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/test_remove_entry_point" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/text_pdf_core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/video" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/web-api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/web-api-core" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-build/web-api-thumb-core" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_14_2024_4_29_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_14_2024_4_29_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-build/build-office.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-build/build-office.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-build/build-pdf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-build/build-pdf.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-build/build-slim.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-build/build-slim.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-build/rpc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-build/rpc.sh" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,12 +194,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "nttlong"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/nttlong/lv-file-2024.git",
+    "accountId": "e0d0e11f-c676-4bcb-9b20-add78052de92"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2kdwoOpZm0kRH8ct5RYVoQD39lT" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,13 +221,19 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "E:/lv-file-git-3"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/root/Desktop/lv-files/lv-file-2024/docker-build"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker-build" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+        <option value="bundled-python-sdk-ce3d9afa04ac-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.20224.347" />
       </set>
     </attachedChunks>
   </component>

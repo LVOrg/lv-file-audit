@@ -1,0 +1,106 @@
+{{ $images := .Files.Get "images.yml" | fromYaml -}}
+{{ $jobsList:= fromYaml ((include "apps-data" (dict "values" .Values "images" $images) ))  -}}
+
+---
+{{- range $key, $value := $jobsList.apps }}
+---
+  {{- if $value.isError }}
+
+    {{- $errorMsg:= print $value.name " is invalid" }}
+  {{- fail $errorMsg }}
+  {{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$value.name}}
+  namespace: {{$value.namespace}}
+  annotations:
+    description: {{$value.description | default "..." }}
+    keel.sh/releaseNotes: kubernetes-cluster-qc
+    keel.sh/policy: "glob:build-*"
+    keel.sh/approvals: "0"
+    lv-file-meta: |-
+        {
+          "nested_key": {{$value.service | toJson }}
+        }
+spec:
+  selector:
+    matchLabels:
+      app:  {{$value.name}}
+  replicas: {{ $value.replicas}}
+  template:
+    metadata:
+      labels:
+        app: {{$value.name}}
+    spec:
+
+      {{if $value.storage }}
+      volumes:
+        - name: tmp-files
+          emptyDir: { }
+        - name: socat-share
+          emptyDir: { }
+        - name: {{ $value.storage.name}}
+          nfs:
+            server: {{$value.storage.server}}
+            path: {{$value.storage.directory}}
+      {{end}}
+
+      containers:
+
+        - image:    {{ $value.image}}
+          name: {{ $value.name }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: {{ $value.configMapName }}
+        {{ if $value.entrypoint }}
+          args:
+          {{- range $key, $args := $value.entrypoint  }}
+            - {{ $args }}
+          {{- end }}
+            - process_services_host=http://localhost
+            - bind=0.0.0.0:80
+            - content_segment_len=9
+            {{ if eq (toString $value.isUseES) "false" }}
+            - elastic_search=false
+            {{else}}
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            {{end}}
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - rabbitmq.username=$(rabbitmq.username)
+            - rabbitmq.password=$(rabbitmq.password)
+           {{ if $value.webWorker }}
+            - workers=1
+           {{end}}
+            - server_type=Uvicorn
+            - worker_class=httptools
+            - timeout_keep_alive=$(timeout_keep_alive)
+            - timeout_graceful_shutdown=$(timeout_graceful_shutdown)
+            - h2_max_concurrent_streams=$(h2_max_concurrent_streams)
+            - vn_suggest_url=$(vn_suggest_url)
+            - file_storage_path=/mnt/files
+            - process_services_host=http://localhost
+            - distribute_lock_server=distribute-lock-service.{{$value.namespace}}:2181
+            - use_ssl=$(use_ssl)
+        {{end}}
+
+          volumeMounts:
+            - name: tmp-files
+              mountPath: /tmp-files
+            - name: socat-share
+              mountPath: /socat-share
+            - name: {{ $value.storage.name }}
+              mountPath: /mnt/files
+      imagePullSecrets:
+        - name: harbor-secret-registry
+---
+{{- end}}
+---

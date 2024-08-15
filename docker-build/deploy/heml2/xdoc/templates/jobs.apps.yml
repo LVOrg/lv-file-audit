@@ -1,0 +1,97 @@
+---
+      {{ $storage_files := .Values.storage_files -}}
+      {{ $config := .Values.config}}
+      {{ $db := .Values.config.db -}}
+      {{ $es := .Values.config.elastic_search -}}
+      {{ $rb := .Values.config.rabbitmq -}}
+      {{ $storage := .Values.storage -}}
+      {{ $job_config := .Values.jobs_config -}}
+---
+{{- range $key, $value := .Values.jobs}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $value.name}}
+  annotations:
+    description: {{ $value.description | default "..." }}
+spec:
+  selector:
+    matchLabels:
+      app: files-{{$value.name}}
+  replicas: {{ $value.replicas | default $job_config.replicas }}
+  template:
+    metadata:
+      labels:
+        app: files-{{$value.name}}
+    spec:
+      imagePullSecrets:
+        - name: harbor-secret-registry
+      volumes:
+      - name: {{$storage.name}}
+      {{if $storage.className }}
+        persistentVolumeClaim:
+          claimName: {{$storage.name}}
+      {{else if $storage.hostPath }}
+        hostPath:
+          path: {{ $storage.hostPath  }}
+          type: DirectoryOrCreate
+      {{else}}
+        nfs:
+          server: {{$storage.server}}
+          path: {{$storage.directory}}
+      {{end}}     
+      - name: {{$storage_files.name}}
+      {{if $storage_files.className }}
+        persistentVolumeClaim:
+          claimName: {{$storage_files.name}}
+      {{else if $storage_files.hostPath }}
+        hostPath:
+          path: {{ $storage_files.hostPath  }}
+          type: DirectoryOrCreate
+      {{else}}
+        nfs:
+          server: {{$storage_files.server}}
+          path: {{$storage_files.directory}}
+      {{end}}
+      containers:
+        - args:
+            - python3
+            - /app/cy_consumers/{{$value.endpoint}}
+            - elastic_search.server=$(elastic_search.server)
+            - elastic_search.prefix_index=$(elastic_search.prefix_index)
+            - db=$(db)
+            - admin_db_name=$(admin_db_name)
+            - temp_directory=./brokers/tmp-files
+            - rabbitmq.server=$(rabbitmq.server)
+            - rabbitmq.port=$(rabbitmq.port)
+            - rabbitmq.msg=$(rabbitmq.msg)
+            - tika_server=$(tika_server)
+            - host_url=$(web_api_url)
+            - file_storage_path=/mnt/files
+            {{if not $storage_files}}
+            - services=""
+            {{end}}
+          image: {{$value.image | default $job_config.image }}
+          {{ if $job_config.resources }}
+          resources:
+            requests:
+              cpu: {{ $value.cpu_requests | default $job_config.resources.cpu_requests }} # Request 500 milli-CPU (0.5 CPU core)
+              memory: {{ $value.mem_requests | default $job_config.resources.mem_requests }} # Request 1 GiB of memory
+            limits:
+              cpu: {{$value.cpu_limits | default $job_config.resources.cpu_limits }}  # Limit to 1 CPU core
+              memory: {{$value.mem_limits | default $job_config.resources.mem_limits }} # Limit to 2 GiB of memory
+          {{end}}
+          envFrom:
+            - configMapRef:
+                name: {{$config.configMapName}}
+          name: files-{{$value.name}}
+          volumeMounts:
+            - mountPath:  {{$storage.mountPath}}
+              name: {{$storage.name}}
+            {{ if $storage_files }}
+            - mountPath: /mnt/files
+              name: {{$storage_files.name}}
+            {{end}}
+---
+{{- end }}

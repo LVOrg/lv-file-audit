@@ -1,0 +1,7 @@
+ARG BASE
+FROM docker.io/nttlong/fs:fs.ocr.core.amd.2
+
+
+COPY ./../cy-commands /cmd
+ENTRYPOINT ["/cmd/server.sh"]
+

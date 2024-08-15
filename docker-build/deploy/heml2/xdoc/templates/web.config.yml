@@ -1,0 +1,40 @@
+      {{ $config := .Values.config}}
+      {{ $db := .Values.config.db -}}
+      {{ $auto_ssl_redirect:=.Values.config.auto_ssl_redirect -}}
+      {{ $es := .Values.config.elastic_search -}}
+      {{ $rb := .Values.config.rabbitmq -}}
+      {{ $api := .Values.webApi -}}
+      {{ $cache := .Values.cache -}}
+      {{ $msg := .Values.msg -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{$config.configMapName}}
+data:
+  admin_db_name: {{ $db.admin_db_name }}
+  db: {{$db.cnn}}
+  elastic_search.prefix_index: '{{$es.prefix_index}}'
+  elastic_search.server: '{{ $es.server }}'
+  rabbitmq.port: '{{ $rb.port }}'
+  rabbitmq.server: '{{ $rb.server }}'
+  rabbitmq.msg: '{{ $rb.msg }}'
+  temp_directory_: /app/share-storage
+  cache_server: '{{$cache.name}}.{{.Release.Namespace}}:{{$cache.port}}'
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  vn_suggest_url: vn-suggestion.{{.Release.Namespace}}:8000
+  tika_server: tika.{{.Release.Namespace}}:9998
+  log_url: {{ .Values.config.webhook_slack_logs }}
+  auto_ssl_redirect: 'off'
+  web_api_url: {{ .Values.webApi.name }}.{{.Release.Namespace}}/lvfile
+---

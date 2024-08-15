@@ -1,0 +1,16 @@
+
+FROM nttlong/surya-ocr:1
+COPY ./../venv-remote-ocr/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY ./../hf /mnt/files/__dataset__/hf
+ENV HUGGINGFACE_HUB_CACHE=/mnt/files/__dataset__/hf
+
+RUN apt clean && apt autoclean
+ENTRYPOINT ["surya_gui"]
+
+
+FROM nttlong/surya-ocr:1
+COPY ./../venv-remote-ocr/bin /usr/local/bin
+ENV HUGGINGFACE_HUB_CACHE=/mnt/files/__dataset__/hf
+RUN apt clean && apt autoclean
+ENTRYPOINT ["surya_gui"]
+

@@ -1,0 +1,30 @@
+appConfig:
+  replicas: 2 # web api replicas
+  name: lv-file
+  host:
+    name: "test-oms.qtsc.com.vn"
+    path: lvfile
+    protocol: https
+  ingress:
+db:
+  mongodb: "mongodb://admin:Lacviet#123@10.200.16.15:27017"
+  manage: hps-file-test
+namespace: xdoc-qc
+rabbit:
+  port: 5672
+  server: "codx-rabbitmq.rabbitmq.svc.cluster.local"
+  username: 'codx'
+  password: 'Lacviet#123'
+replicas: 2 # job pod replicas
+search:
+  prefix_index: 'qtsc-codx'
+  server: 'http://10.200.16.16:9200'
+
+storage:
+  directory: "/data/share/xdoc-web"
+  name: storage-files
+  server: "10.200.16.15"
+customer: "qtsc"
+imageTag: "latest"
+repository: "docker.lacviet.vn/xdoc"
+debugLibs: []

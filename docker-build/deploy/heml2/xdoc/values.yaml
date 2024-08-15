@@ -1,0 +1,118 @@
+config:
+  configMapName: xdoc-config
+  webhook_slack_logs: https://hooks.slack.com/services/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
+  auto_ssl_redirect: off
+  db:
+    cnn: mongodb://192.168.18.36:27017
+    admin_db_name: 'lv-docs'
+    authSource: 'hps-file-test'
+    host: '192.168.18.36'
+    password: ''
+    port: '27017'
+    username: ''
+  elastic_search:
+    prefix_index: 'lv-codx'
+    server: 'http://192.168.18.36:9200'
+  rabbitmq:
+    port: '5672'
+    server: rabbitmq.rabbitmq-dev
+    msg: xzad
+  workers: auto
+
+storage:
+  name: xdoc-storage
+  directory: /codx-file-storage/tmp
+  hostPath: "/home/xdoc/tmp"
+  mountPath: /app/share-storage
+  # server: 192.168.18.36
+  # className: longhorn-storage-delete
+  # size: 30Gi
+
+storage_files:
+  name: storage-files
+  hostPath: "/home/xdoc/files"
+  directory: /codx-file-storage/files
+  # server: 192.168.18.36
+  # className: longhorn-storage-delete
+  # size: 30Gi
+
+cache:
+  name: file-cache
+  port: 11211
+
+webApi:
+  name: xdoc
+  replicas: 3
+  hostUrl: https://172.16.7.99/lvfile
+  images: nttlong/fs:fs.tiny.amd.11.18
+  
+ingress:
+  name: xdoc-web-ingress
+  path: /lvfile/(.*)
+  hostname: ""
+
+# tolerations:
+# - key: "app"
+#   operator: "Equal"
+#   value: "xdoc"
+#   effect: "NoSchedule"
+jobs_config:
+  image: nttlong/fs:fs.large.amd.11.4
+  replicas: 1
+  resources:
+    cpu_requests: 0.1
+    cpu_limits: 1
+    mem_requests:  10Mi
+    mem_limits: 2Gi
+
+jobs:
+  - name: files-upload
+    endpoint: files_upload.py
+
+  - name: generate-image-from-office
+    endpoint: files_generate_image_from_office.py
+
+  - name: files-generate-image-from-pdf
+    endpoint: files_generate_image_from_pdf.py
+
+  - name: files-generate-image-from-video
+    endpoint: files_generate_image_from_video.py
+
+#  - name: files-ocr-pdf
+#    endpoint: files_ocr_pdf.py
+
+  - name: files-generate-thumbs
+    endpoint: files_generate_thumbs.py
+
+  - name: files-save-custom-thumb
+    endpoint: files_save_custom_thumb.py
+
+  - name: files-save-default-thumb
+    endpoint: files_save_default_thumb.py
+
+  - name: files-text-from-pdf
+    endpoint: files_text_from_pdf.py
+
+#  - name: files-save-orc-pdf-file
+#    endpoint: files_save_orc_pdf_file.py
+
+  - name: files-save-search-engine
+    endpoint: files_save_search_engine.py
+
+  - name: files-extrac-text-from-image
+    endpoint: files_extrac_text_from_image.py
+
+  # - name: files-clean-up
+  #   endpoint: files_clean_up.py
+
+  # - name: files-move-tenants
+  #   endpoint: files_move_tenants.py
+
+  # - name: files-clean-unfinished
+  #   endpoint: files_clean_unfinish.py
+
+  # - name: fix-hanger-content
+  #   endpoint: fix_hanger_content.py
+
+  # - name: app-reindex-all-data
+  #   endpoint: app_re_index_all_data.py

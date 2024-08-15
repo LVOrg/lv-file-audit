@@ -1,0 +1,7 @@
+
+FROM debian:unstable-slim
+RUN apt update
+RUN apt install memcached -y
+RUN apt install libmemcached-tools -y
+RUN apt clean && apt autoclean
+

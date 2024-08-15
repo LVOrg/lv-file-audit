@@ -1,0 +1,8 @@
+
+FROM docker.io/nttlong/fs:fs.cv2.core.amd.5
+ARG TARGETARCH
+ARG OS
+COPY ./../cy-commands /cmd
+RUN apt clean && apt autoclean
+ENTRYPOINT ["/cmd/server-cv2.sh"]
+

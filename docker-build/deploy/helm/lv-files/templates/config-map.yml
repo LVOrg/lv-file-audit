@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appConfig.name }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  admin_db_name: {{ .Values.db.manage }}
+  db: {{urlquery  .Values.db.mongodb }}
+  {{ if eq (toString .Values.search) "false" }}
+  elastic_search: 'false'
+  {{else}}
+  elastic_search.prefix_index: '{{.Values.search.prefix_index}}'
+  elastic_search.server: '{{.Values.search.server}}'
+  {{end}}
+  rabbitmq.port: '{{ .Values.rabbit.port }}'
+  rabbitmq.server: '{{ .Values.rabbit.server }}'
+  rabbitmq.msg: '{{ .Values.rabbit.prefixMsg }}'
+  rabbitmq.username: '{{ .Values.rabbit.username }}'
+  rabbitmq.password: '{{ .Values.rabbit.password }}'
+  cache_server: '{{.Values.cache.appName}}-service.{{.Values.namespace}}:11211'
+  workers: '1'
+  worker_class.uvicorn: 'UvicornWorker' #UvicornH11Worker
+  worker_class.h11: 'UvicornH11Worker' #UvicornH11Worker
+  worker_class.uvloop: 'uvloop'
+  worker_class.trio: 'trio'
+  timeout_keep_alive: '30'
+  timeout_graceful_shutdown: '30'
+  server_type.unvicorn: 'unvicorn'
+  server_type.hypercorn: 'hypercorn'
+  server_type.default: 'auto'
+  h2_max_concurrent_streams: '100'
+  web_api_url: {{ .Values.webAppName }}.{{.Values.Namespace}}/lvfile
+  private_web_api: http://{{ .Values.appConfig.name }}.{{.Values.namespace}}:8012/lvfile
+  auto_ssl_redirect: '{{ .Values.auto_ssl_redirect }}'
+  use_ssl: '{{ .Values.use_ssl }}'
+
+---

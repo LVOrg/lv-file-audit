@@ -1,0 +1,43 @@
+main: fs-tiny
+office: "nttlong/lv-office-libs:1"
+video: "nttlong/lv-video-libs:1"
+pdf: "nttlong/lv-pdf-libs:1"
+tika: apache/tika:latest
+thumb: "nttlong/lv-thumbs-libs:1"
+
+check_key: ^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$
+processesMsgConfig:
+  re-do-all:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/re_do_all.py
+    replicas: 1
+  content:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/contents.py
+    replicas: 2
+  image:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/images.py
+    replicas: 2
+  index:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/re_do_all.py
+  google-file-sync:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/google_file_sync.py
+    replicas: 2
+  onedrive-file-sync:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/azure_file_sync.py
+    replicas: 2
+  google-folder-sync:
+    entrypoint:
+      - python3
+      - /app/cy_jobs/google_directories_sync.py
+    replicas: 2

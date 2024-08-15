@@ -1,0 +1,15 @@
+
+FROM linuxserver/libreoffice
+RUN apk update
+RUN apk upgrade
+RUN apk add py3-pip
+RUN apk add git
+#COPY ./../docker-build/requirements/build-app-office.txt /app/office.req.txt
+RUN python3 -m pip install gradio --break-system-packages
+RUN python3 -m pip install webp  --break-system-packages
+RUN python3 -m pip install pillow  --break-system-packages
+#RUN python3 -m pip install -r /app/office.req.txt --no-cache-dir
+COPY ./../app_services /app/app_services
+RUN python3 /app/app_services/office_server_check.py
+ENTRYPOINT ["/usr/bin/env"]
+

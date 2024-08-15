@@ -1,0 +1,10 @@
+
+FROM jbarlow83/ocrmypdf
+RUN apt update && apt upgrade -y
+RUN apt-get install tesseract-ocr-vie -y
+COPY ./../docker-build/requirements/ocrmypdf.txt /app/ocrmypdf.txt
+RUN pip install -r /app/ocrmypdf.txt
+COPY ./../remote_server_libs /remote_server_libs
+COPY ./../cy_file_cryptor /remote_server_libs/cy_file_cryptor
+ENTRYPOINT ["/remote_server_libs/ocr.sh"]
+

@@ -1,0 +1,10 @@
+
+FROM python:3.10-alpine
+RUN apk add git
+RUN pip install --upgrade pip
+RUN python3 -m pip install git+https://github.com/Sudo-VP/Vietnamese-Word-Segmentation-Python.git
+COPY ./../docker-build/requirements/web-api.req.txt /app/web-api.req.txt
+RUN python3 -m pip install -r  /app/web-api.req.txt --no-cache-dir
+COPY ./../cy_grpc /app/cy_grpc
+COPY ./../RPC_serverless_check.py /app/RPC_serverless_check.py
+

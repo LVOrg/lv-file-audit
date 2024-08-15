@@ -1,0 +1,38 @@
+
+{{ $images := .Files.Get "images.yml" | fromYaml -}}
+{{ $jobsList:= fromYaml ((include "apps-data" (dict "values" .Values "images" $images) ))  -}}
+
+{{- range $key, $value := $jobsList.apps }}
+
+
+---
+{{ if $value.service }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: {{$value.name}}-service
+ namespace: {{$value.namespace}}
+ labels:
+   app: {{$value.name}}-service
+spec:
+{{ if $value.service.nodePort }}
+ type: NodePort
+{{else}}
+ type: ClusterIP
+{{end}}
+ selector:
+   app: {{$value.name}}
+ ports:
+   - name: {{$value.name}}
+     port: 80
+     targetPort: 80
+     protocol: TCP
+{{ if $value.service.nodePort }}
+   nodePort: {{$value.service.nodePort}}
+{{end}}
+---
+{{ end }}
+---
+{{- end }}
+

@@ -1,0 +1,29 @@
+
+FROM docker.io/nttlong/fs:fs.medium.core.amd.14
+ARG TARGETARCH
+ARG OS
+COPY ./../docker-build/requirements/office.req.txt /app/requirements/office.req.txt
+RUN python3 -m pip install -r /app/requirements/office.req.txt --no-cache-dir
+#COPY ./../env_libre_office/lib/python3.10/site-packages /usr/local/lib/python3.10/dist-packages
+COPY ./../cy_file_cryptor /app/cy_file_cryptor
+COPY ./../cy_docs /app/cy_docs
+COPY ./../cy_es /app/cy_es
+COPY ./../cy_kit /app/cy_kit
+COPY ./../cy_logger /app/cy_logger
+COPY ./../gridfs /app/gridfs
+COPY ./../elasticsearch /app/elasticsearch
+COPY ./../pymongo /app/pymongo
+COPY ./../bson /app/bson
+COPY ./../config.yml /app/config.yml
+COPY ./../cy_consumers /app/cy_consumers
+COPY ./../cy_services /app/cy_services
+COPY ./../cy_ui /app/cy_ui
+COPY ./../cy_utils /app/cy_utils
+COPY ./../cy_vn /app/cy_vn
+COPY ./../cy_vn_suggestion /app/cy_vn_suggestion
+COPY ./../cy_web /app/cy_web
+COPY ./../cy_xdoc /app/cy_xdoc
+COPY ./../cylibs /app/cylibs
+COPY ./../cy_plugins /app/cy_plugins
+COPY ./../cy_fucking_whore_microsoft /app/cy_fucking_whore_microsoft
+COPY ./../cyx /app/cyx

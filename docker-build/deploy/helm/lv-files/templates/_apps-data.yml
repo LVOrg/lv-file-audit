@@ -1,0 +1,95 @@
+{{- define "apps-data"  -}}
+{{- $appConfig :=.values.appConfig  }}
+{{- $processesMsgConfig:= .images.processesMsgConfig }}
+{{ $valuesObject:= .values}}
+{{ $imagesObject:= .images}}
+---
+apps:
+    - name: {{ $appConfig.name }}
+      configMapName: {{ $appConfig.name }}-config
+      image: {{$valuesObject.repository}}/{{ $imagesObject.main }}-{{$valuesObject.customer}}:{{$valuesObject.imageTag}}
+      namespace: {{ .values.namespace}}
+      customer:  {{ .values.customer}}
+      replicas: {{$appConfig.replicas}}
+      isUseES: {{$valuesObject.search}}
+      webWorker: {{$valuesObject.webWorker}}
+      entrypoint:
+        - python3
+        - /app/cy_xdoc/server.py
+        - bind=0.0.0.0:80
+        - content_segment_len=9
+        {{if $appConfig.host}}
+        - host_url={{$appConfig.host.protocol}}://{{$appConfig.host.name}}/{{$appConfig.host.path}}
+        {{end}}
+        - private_web_api=http://{{ $appConfig.name }}-service.{{$valuesObject.namespace}}:80/{{$appConfig.host.path}}
+        - remote_office=http://lv-office-service.{{$valuesObject.namespace}}:80
+        - remote_pdf=http://lv-pdf-service.{{$valuesObject.namespace}}:80
+        - remote_video=http://lv-video-service.{{$valuesObject.namespace}}:80
+        - remote_ocr=http://lv-ocr-service.{{$valuesObject.namespace}}:80
+        - remote_thumb=http://lv-thumbs-service.{{$valuesObject.namespace}}:80
+        - tika_server=http://tika-service.{{$valuesObject.namespace}}:80
+        - cache_server=lv-file-cache-service.{{$valuesObject.namespace}}:11211
+        - content_service=http://content-service.{{$valuesObject.namespace}}:80
+        - debug=false
+        - domains='*'
+        {{ if hasKey $valuesObject "generation" }}
+        - generation={{ $valuesObject.generation }}
+        {{ end }}
+      service:
+        {{ if index $appConfig "nodePort" }}
+        type: nodePort
+        nodePort: {{$appConfig.nodePort}}
+        {{else}}
+        {{ if index $appConfig "ingress"}}
+        {{- $ingress := $appConfig.ingress }}
+        ingress:
+          path: {{$appConfig.host.path}}
+          pathType: {{$ingress.pathType}}
+          ip: {{$appConfig.host.name}}
+        {{end}}
+        {{end}}
+        requireService: {{$appConfig.requireService}}
+
+      storage:
+        name: {{ .values.storage.name}}
+        server: {{ .values.storage.server}}
+        directory: {{ .values.storage.directory}}
+    {{- range $key, $value := .values.processMsg }}
+    {{- $app:= (index $processesMsgConfig $value) }}
+    {{ if $app }}
+    - name: {{$value}}
+      configMapName: {{ $appConfig.name }}-config
+      customer:  {{ $valuesObject.customer}}
+      image:  {{$valuesObject.repository}}/{{ $imagesObject.main }}-{{$valuesObject.customer}}:{{$valuesObject.imageTag}}
+      namespace: {{ $valuesObject.namespace }}
+      replicas: {{$app.replicas}}
+      isUseES: {{$valuesObject.search}}
+      entrypoint:
+        {{- range $km,$e := $app.entrypoint }}
+        - {{$e}}
+        {{- end }}
+        - private_web_api=http://{{ $appConfig.name }}-service.{{$valuesObject.namespace}}:80/{{$appConfig.host.path}}
+        - remote_office=http://lv-office-service.{{$valuesObject.namespace}}:80
+        - remote_pdf=http://lv-pdf-service.{{$valuesObject.namespace}}:80
+        - remote_video=http://lv-video-service.{{$valuesObject.namespace}}:80
+        - tika_server=http://tika-service.{{$valuesObject.namespace}}:80
+        - cache_server=lv-file-cache-service.{{$valuesObject.namespace}}:11211
+        - content_service=http://content-service.{{$valuesObject.namespace}}:80
+        - remote_ocr=http://lv-ocr-service.{{$valuesObject.namespace}}:80
+        - debug=false
+        {{ if hasKey $valuesObject "generation"  }}
+        - generation={{ $valuesObject.generation }}
+        {{ end }}
+      storage:
+        name: {{ $valuesObject.storage.name }}
+        server: {{ $valuesObject.storage.server }}
+        directory: {{ $valuesObject.storage.directory }}
+
+    {{else}}
+    - name: {{$value}}
+      isError: True
+    {{end}}
+    {{- end}}
+
+---
+{{- end -}}

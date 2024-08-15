@@ -1,0 +1,8 @@
+
+FROM clearlinux/tesseract-ocr
+RUN mkdir -p /usr/share/tesseract-ocr/5/tessdata
+COPY ./../../../../../usr/share/tesseract-ocr/5/tessdata /usr/share/tesseract-ocr/5/tessdata
+COPY ./../cy_tesseract_api /app
+RUN python -m pip install -r /app/cy_tesseract_api/requirement.txt
+ENTRYPOINT []
+
